@@ -3,7 +3,7 @@ Min Heap Implementation in Python
 """
 
 
-class MinHeap:
+class Heap:
     def __init__(self):
         """
         On this implementation the heap list is initialized with a value
@@ -27,6 +27,7 @@ class MinHeap:
         """
         Inserts a value into the heap
         """
+
         # Append the element to the heap
         self.heap_list.append(k)
         # Increase the size of the heap.
@@ -80,18 +81,71 @@ class MinHeap:
         return root
 
 
+
+
+    def heapsort(self,A):
+        """sorting"""
+        self.build_max_heap(A)
+        for i in range(len(A) - 1, 0, -1):
+            A[0], A[i] = A[i], A[0]
+            self.max_heapify(A, index=0, size=i)
+
+    def parent(self,i):
+        return (i - 1) // 2
+
+    def left(self,i):
+        return 2 * i + 1
+
+    def right(self,i):
+        return 2 * i + 2
+
+    def build_max_heap(self,A):
+        length = len(A)
+        start = self.parent(length - 1)
+        while start >= 0:
+            self.max_heapify(A, index=start, size=length)
+            start = start - 1
+
+    def max_heapify(self,A, index, size):
+        left_child = self.left(index)
+        right_child = self.right(index)
+        if (left_child < size and A[left_child] > A[index]):
+            largest = left_child
+        else:
+            largest = index
+        if (right_child < size and A[right_child] > A[largest]):
+            largest = right_child;
+        if (largest != index):
+            A[largest], A[index] = A[index], A[largest]
+            self.max_heapify(A, largest, size)
+
+
+
+
+
+
 """
 Driver program
 """
 # Same tree as above example.
-my_heap = MinHeap()
-my_heap.insert(5)
-my_heap.insert(6)
-my_heap.insert(7)
-my_heap.insert(9)
+my_heap = Heap()
+
+my_heap.heapsort()
+
+my_heap.insert(1)
+
+my_heap.insert(124)
 my_heap.insert(13)
-my_heap.insert(11)
-my_heap.insert(10)
+my_heap.insert(90)
+my_heap.insert(6567)
+my_heap.insert(232)
+my_heap.insert(23)
+my_heap.insert(232)
+my_heap.insert(237)
+
+
 
 print(my_heap.delete_min())  # removing min node i.e 5
 
+print(my_heap.delete_min())
+print(my_heap.delete_max())
