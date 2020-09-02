@@ -1,5 +1,5 @@
 """
-Min Heap Implementation in Python
+Heap Implementation in Python
 """
 
 
